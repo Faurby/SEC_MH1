@@ -8,8 +8,7 @@ p = 6661
 # Bob's public key PK = g^sk mod p
 bobPK = 2227
 
-# 1. You are Alice, send the message '2000' to Bob
-
+# Select random r as Alice's SK 
 r = 5125
 
 def encryption(m, pk):
@@ -22,10 +21,28 @@ def decryption(c, sk):
     m = c2 / ((c1 ** sk) % p)
     return m
 
+# Alice encrypting the message to Bob
 c = encryption(2000, bobPK)
 
-print("==== Assignment 1 ====\nAlice's message to Bob: ", c)
+print("==== Assignment 1 ====\nAlice's encrypted message to Bob: ", c)
 
-m = decryption(c, 66)
+# brute force find Bob's SK
+bobSK = 0
+for i in range(6661):
+    r = (g ** i) % p
+    if (r == 2227):
+        bobSK = i
 
-print("\n==== Assignment 2 ====\nBob's decrypted message, as seen as Eve: ", m)
+# Decrypting the message using Bob's SK
+m = decryption(c, bobSK)
+
+print("\n==== Assignment 2 ====\nBob's secret key found using brute force: ", bobSK, "\nBob's decrypted message, as seen as Eve: ", m)
+
+# Mallory intercepting Alice's message, and modifying it to decrypt to 6000
+c1, c2 = c
+c2 *= 3
+c = (c1, c2)
+
+# Bob decrypting the message
+m = decryption(c, bobSK)
+print("\n==== Assignment 3 ====\nBob decrypting the modified message from Mallory and receiving: ", m)
