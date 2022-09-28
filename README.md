@@ -22,4 +22,4 @@ Bob decrypting the modified message from Mallory and receiving:  6000.0
 
 ## Report
 
-The report is written in the `report.md` file, and also in LaTeX exported as `report.pdf`.
+The report is written in `report.pdf`.
