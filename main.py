@@ -12,13 +12,14 @@ bobPK = 2227
 r = 5125
 
 def encryption(m, pk):
-    c1 = (g**r) % p
-    c2 = m * ((pk**r) % p)
+    c1 = pow(g, r, p)
+    c2 = (m * pk**r) % p
     return (c1, c2)
 
 def decryption(c, sk):
     c1, c2 = c
-    m = c2 / ((c1 ** sk) % p)
+    s = pow(c1, sk, p)
+    m = (c2 * pow(s, -1, p)) % p
     return m
 
 # Alice encrypting the message to Bob
